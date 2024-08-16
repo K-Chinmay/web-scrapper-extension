@@ -11,35 +11,8 @@ table.hovered {
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8);
-  font-family: Arial, sans-serif;
-}
-
-/* .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 90%;
-  max-height: 80%;
-  overflow-y: auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-} */
-
-h2 {
+/* h2 {
   margin-top: 0;
-}
-
-pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-  margin: 20px 0;
 }
 
 button {
@@ -54,4 +27,4 @@ button {
 
 button:hover {
   background-color: #0056b3;
-}
+} */
