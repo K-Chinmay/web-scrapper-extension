@@ -1,0 +1,12 @@
+table {
+  cursor: pointer;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+table.selected {
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+}
+
+table.hovered {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
