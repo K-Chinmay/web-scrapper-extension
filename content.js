@@ -5,15 +5,35 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 function scrapeData() {
-  const rows = document.querySelectorAll("table tr");
+  const tables = document.querySelectorAll("table");
   let csvContent = "data:text/csv;charset=utf-8,";
+  console.log("inside scrape data");
 
-  rows.forEach((row) => {
-    const cols = row.querySelectorAll("td, th");
-    const rowData = Array.from(cols)
-      .map((col) => col.textContent.trim())
-      .join(",");
-    csvContent += rowData + "\r\n";
+  tables.forEach((table, index) => {
+    const rows = table.querySelectorAll("tr");
+
+    rows.forEach((row) => {
+      const cols = row.querySelectorAll("td, th");
+      const rowData = Array.from(cols)
+        .map((col) => {
+          let textContent = col.textContent.trim();
+          textContent = `"${textContent}"`;
+
+          if (col.tagName.toLowerCase() === "th") {
+            textContent = `[${textContent}]`;
+          }
+
+          return textContent;
+        })
+        .join(",");
+
+      csvContent += rowData + "\r\n";
+    });
+
+    // Add a blank row to separate tables
+    if (index < tables.length - 1) {
+      csvContent += "\r\n";
+    }
   });
 
   const link = document.createElement("a");
