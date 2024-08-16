@@ -41,9 +41,9 @@ function handleClick(event) {
 // Call this function to add the event listeners when the content script runs
 addTableEventListeners();
 
-function scrapeData() {
+function scrapeData(preview = false) {
   const tables = document.querySelectorAll("table");
-  let csvContent = "data:text/csv;charset=utf-8,";
+  let csvContent = "";
 
   selectedTables.forEach((index) => {
     const table = tables[index];
@@ -70,17 +70,29 @@ function scrapeData() {
     csvContent += "\r\n"; // Separate tables with a blank row
   });
 
-  const link = document.createElement("a");
-  link.setAttribute("href", encodeURI(csvContent));
-  link.setAttribute("download", "scraped_data.csv");
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
+  if (preview) {
+    // Send CSV content back to the popup for preview
+    chrome.runtime.sendMessage({
+      action: "displayPreview",
+      csvContent: csvContent,
+    });
+  } else {
+    // Download the CSV
+    const link = document.createElement("a");
+    link.setAttribute(
+      "href",
+      "data:text/csv;charset=utf-8," + encodeURI(csvContent)
+    );
+    link.setAttribute("download", "scraped_data.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
 }
 
-// Listen for the message from the popup to download the selected tables
+// Listen for the message from the popup to either scrape data for download or preview
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   if (request.action === "scrapeData") {
-    scrapeData();
+    scrapeData(request.preview);
   }
 });
