@@ -38,17 +38,3 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     );
   }
 });
-
-// Listen for the message to populate the CSV preview
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-//   if (request.action === "populatePreview") {
-//     const csvContentElement = document.getElementById("csv-content");
-//     csvContentElement.textContent = request.csvContent;
-//   }
-// });
-
-// document.getElementById("close-modal").addEventListener("click", () => {
-//   window.close(); // Close the modal window when the button is clicked
-// });
-
-// link to test : https://www.freecodecamp.org/news/html-tables-table-tutorial-with-css-example-code/
