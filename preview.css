@@ -48,7 +48,7 @@ pre {
 .csv-cell {
   padding: 0 10px; /* Add padding to separate cells */
   border-right: 1px solid #ddd; /* Add a right border to separate cells */
-  min-width: 150px;
+  width: 150px;
 }
 
 .csv-cell:last-child {
