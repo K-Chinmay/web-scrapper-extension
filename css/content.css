@@ -4,7 +4,23 @@ table {
 }
 
 table.selected {
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  outline: 3px solid red !important; /* Use !important to override existing styles */
+  background-color: rgba(255, 0, 0, 0.1) !important; /* Light red background */
+  transition: outline 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Add some padding and ensure the text inside the selected table is not affected */
+table.selected th,
+table.selected td {
+  padding: 5px !important;
+  color: inherit; /* Retain the original text color */
+}
+
+/* Ensure that no other styles can override this */
+table.selected * {
+  color: inherit !important;
+  background-color: transparent !important;
+  border-color: inherit !important;
 }
 
 table.hovered {

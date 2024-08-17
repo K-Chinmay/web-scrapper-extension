@@ -38,3 +38,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     );
   }
 });
+
+chrome.runtime.onMessage.addListener((request) => {
+  if (request.action === "error") {
+    displayError(request.message);
+  }
+});
+
+function displayError(message) {
+  const errorDiv = document.getElementById("error-message");
+  errorDiv.textContent = message;
+  errorDiv.style.display = "block";
+}

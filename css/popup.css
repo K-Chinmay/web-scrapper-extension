@@ -10,6 +10,7 @@ h2 {
   font-size: 18px;
   color: #333;
   margin-bottom: 15px;
+  margin-top: 0px;
   text-align: center;
 }
 
@@ -35,4 +36,12 @@ button:hover {
 
 button:active {
   background-color: #3e8e41;
+}
+
+#error-message {
+  background-color: #ffdddd;
+  border-left: 4px solid #f44336;
+  padding: 10px;
+  margin-bottom: 10px;
+  font-size: 12px;
 }

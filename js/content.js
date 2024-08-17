@@ -24,17 +24,25 @@ function handleClick(event) {
   console.log("event.target.tagName", event.target.tagName);
   // Traverse up the DOM to find the closest table element
   const table = event.target.closest("table");
-  if (table) {
-    const index = Array.from(document.querySelectorAll("table")).indexOf(table);
+  try {
+    if (table) {
+      const index = Array.from(document.querySelectorAll("table")).indexOf(
+        table
+      );
 
-    if (selectedTables.has(index)) {
-      selectedTables.delete(index);
-      table.classList.remove("selected");
-    } else {
-      selectedTables.add(index);
-      table.classList.add("selected");
+      if (selectedTables.has(index)) {
+        selectedTables.delete(index);
+        table.classList.remove("selected");
+      } else {
+        selectedTables.add(index);
+        table.classList.add("selected");
+      }
     }
+  } catch (error) {
+    // Send error to popup for display
+    chrome.runtime.sendMessage({ action: "error", message: error.message });
   }
+
   console.log("selectedTables", selectedTables);
 }
 
@@ -45,48 +53,53 @@ function scrapeData(preview = false) {
   const tables = document.querySelectorAll("table");
   let csvContent = "";
 
-  selectedTables.forEach((index) => {
-    const table = tables[index];
-    const rows = table.querySelectorAll("tr");
+  try {
+    selectedTables.forEach((index) => {
+      const table = tables[index];
+      const rows = table.querySelectorAll("tr");
 
-    rows.forEach((row) => {
-      const cols = row.querySelectorAll("td, th");
-      const rowData = Array.from(cols)
-        .map((col) => {
-          let textContent = col.textContent.trim();
-          textContent = `"${textContent}"`;
+      rows.forEach((row) => {
+        const cols = row.querySelectorAll("td, th");
+        const rowData = Array.from(cols)
+          .map((col) => {
+            let textContent = col.textContent.trim();
+            textContent = `"${textContent}"`;
 
-          if (col.tagName.toLowerCase() === "th") {
-            textContent = `[${textContent}]`;
-          }
+            if (col.tagName.toLowerCase() === "th") {
+              textContent = `[${textContent}]`;
+            }
 
-          return textContent;
-        })
-        .join(",");
+            return textContent;
+          })
+          .join(",");
 
-      csvContent += rowData + "\r\n";
+        csvContent += rowData + "\r\n";
+      });
+
+      csvContent += "\r\n"; // Separate tables with a blank row
     });
 
-    csvContent += "\r\n"; // Separate tables with a blank row
-  });
-
-  if (preview) {
-    // Send CSV content back to the popup for preview
-    chrome.runtime.sendMessage({
-      action: "displayPreview",
-      csvContent: csvContent,
-    });
-  } else {
-    // Download the CSV
-    const link = document.createElement("a");
-    link.setAttribute(
-      "href",
-      "data:text/csv;charset=utf-8," + encodeURI(csvContent)
-    );
-    link.setAttribute("download", "scraped_data.csv");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    if (preview) {
+      // Send CSV content back to the popup for preview
+      chrome.runtime.sendMessage({
+        action: "displayPreview",
+        csvContent: csvContent,
+      });
+    } else {
+      // Download the CSV
+      const link = document.createElement("a");
+      link.setAttribute(
+        "href",
+        "data:text/csv;charset=utf-8," + encodeURI(csvContent)
+      );
+      link.setAttribute("download", "scraped_data.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  } catch (error) {
+    // Send error to popup for display
+    chrome.runtime.sendMessage({ action: "error", message: error.message });
   }
 }
 
