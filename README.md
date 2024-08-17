@@ -1,15 +1,14 @@
-Below is a `README.md` file for the Chrome extension that allows users to scrape table data from a webpage, select specific columns directly from the table, and download the data as a CSV file.
+Below is a `README.md` file for the Chrome extension that allows users to scrape table data from a webpage, select specific tables from webpage, and download the data as a CSV file.
 
 ---
 
-## Table Scraper Chrome Extension
+## Web Scraper Chrome Extension
 
-This Chrome extension allows users to scrape table data from any webpage, select specific columns directly from the table, and download the selected data as a CSV file. The extension is designed to be user-friendly, with the ability to visually select and deselect table columns by clicking on the table headers.
+This Chrome extension allows users to scrape table data from any webpage, select specific tables from webpage, and download the selected data as a CSV file. The extension is designed to be user-friendly, with the ability to visually select and deselect table columns by clicking on the table headers.
 
 ### Features
 
 - **Table Selection**: Click on any table on the webpage to select it for scraping.
-- **Column Selection**: Click on the table headers (`<th>`) to select or deselect specific columns for inclusion in the CSV file.
 - **CSV Download**: After making your selections, download the data as a CSV file with a single click.
 - **CSV Preview**: Preview the data in a new window before downloading it.
 
@@ -18,7 +17,7 @@ This Chrome extension allows users to scrape table data from any webpage, select
 1. **Clone or Download the Repository:**
 
    ```bash
-   git clone https://github.com/yourusername/table-scraper-extension.git
+   git clone https://github.com/K-Chinmay/web-scrapper-extension.git
    cd table-scraper-extension
    ```
 
@@ -33,18 +32,22 @@ This Chrome extension allows users to scrape table data from any webpage, select
 ### Usage
 
 1. **Enable the Extension:**
+
    - Navigate to a webpage with a table.
    - Click on the Table Scraper extension icon in the Chrome toolbar.
 
 2. **Select a Table:**
+
    - Hover over any table on the webpage. The selected table will be highlighted.
    - Click on the table to select it.
 
 3. **Select/Deselect Columns:**
+
    - Click on the table headers (`<th>`) to toggle the selection of specific columns.
    - Selected columns will be highlighted.
 
 4. **Download CSV:**
+
    - Click the "Download CSV" button in the popup to download the selected data as a CSV file.
 
 5. **Preview CSV:**
@@ -55,8 +58,8 @@ This Chrome extension allows users to scrape table data from any webpage, select
 - **`manifest.json`**: Configuration file for the Chrome extension.
 - **`popup.html`**: The HTML file for the extension's popup UI.
 - **`popup.js`**: JavaScript file for handling user interactions in the popup.
-- **`contentScript.js`**: Script injected into webpages to handle table selection and data scraping.
-- **`contentScript.css`**: CSS file for styling the table selection and column toggling.
+- **`content.js`**: Script injected into webpages to handle table selection and data scraping.
+- **`content.css`**: CSS file for styling the table selection and column toggling.
 - **`preview.html`**: HTML file for displaying the CSV preview in a new window.
 - **`preview.js`**: JavaScript file for rendering the CSV data in the preview window.
 
@@ -67,7 +70,7 @@ This Chrome extension allows users to scrape table data from any webpage, select
   - `activeTab`: To interact with the currently active tab.
   - `scripting`: To execute scripts in the context of the active tab.
   - `downloads`: To initiate the CSV download.
-  
+
 ### Notes
 
 - If you encounter any issues with tables not being detected, ensure that the table elements are properly structured using `<table>`, `<th>`, and `<td>` tags.
